@@ -21,7 +21,8 @@ module.exports.postData = async (req, res) => {
 
             const data_save = await save_data.save();
 
-            res.send({
+            res.status(200).send({
+                status: true,
                 data: data_save
             })
 
@@ -30,7 +31,8 @@ module.exports.postData = async (req, res) => {
     } catch (error) {
         if(error) {
             res.send({
-                msg: "Signup Falid"
+                status: false,
+                msg: "duplicate key Found"
             })
         }
     }
