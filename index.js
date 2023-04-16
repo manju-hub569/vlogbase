@@ -13,7 +13,7 @@ app.use(cookieparse());
 
 require('./DB/conn');
 
-app.use('/files',express.static('Files/index.html'));
+app.use('*',express.static('Files/index.html'));
 require('./mainroutes')(app);
 
 app.listen(PORT,() => {
