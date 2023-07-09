@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json());
 app.use(express.urlencoded( {extended:true} ));
 app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
+// app.use(cors());
 app.use(cookieparse());
 
 require('./DB/conn');

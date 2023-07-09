@@ -16,6 +16,7 @@ module.exports.login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             sameSite: 'None', secure: true 
+            // sameSite: 'None', secure: true
         })
     
         let pass = await bcrypt.compare(password, data.password);
@@ -36,5 +37,19 @@ module.exports.login = async (req, res) => {
             stat: false,
             msg:error
         });
+    }
+}
+
+module.exports.logout = async (req, res) => {
+    try {
+        res.clearCookie('token', {path:'/'});
+        res.status(200).send({
+            status: true,
+            msg: "Logout Successfull"
+        });
+    } catch (error) {
+        res.send({
+            error
+        })
     }
 }
