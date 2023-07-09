@@ -15,7 +15,7 @@ app.use(cookieparse());
 
 require('./DB/conn');
 
-app.use('/apis/files', express.static(path.join(__dirname, '/uploads')))
+app.use('/api/file', express.static(path.join(__dirname, '/uploads')))
 
 require('./mainroutes')(app);
 
