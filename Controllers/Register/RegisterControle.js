@@ -15,8 +15,10 @@ module.exports.postData = async (req, res) => {
 
             let pass = await bcrypt.hash(password, 10);
 
+            let image = req.file.originalname
+
             const save_data = await Register({
-                username,password:pass,email,address,mobile
+                username,password:pass,email,address,mobile,img:image
             });
 
             const data_save = await save_data.save();
@@ -38,3 +40,25 @@ module.exports.postData = async (req, res) => {
         }
     }
 };
+
+module.exports.getData = async (req, res) => {
+    try {
+        const data = await Register.find({});
+        const resp = await data;
+
+        if(resp) {
+            res.send({
+                status:true,
+                data: resp
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+
+        res.send({
+            status: false,
+            data: error
+        })
+    }
+}

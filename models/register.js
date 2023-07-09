@@ -20,6 +20,10 @@ const eReg = mongoose.Schema({
     mobile: {
         type:Number,
         unique: false
+    },
+    img: {
+        type: String,
+        unique: false
     }
 });
 
