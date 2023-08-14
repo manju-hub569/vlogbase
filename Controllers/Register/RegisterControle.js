@@ -15,7 +15,7 @@ module.exports.postData = async (req, res) => {
 
             let pass = await bcrypt.hash(password, 10);
 
-            let image = req.file.filename
+            let image = req.file.filename || "default.png"
 
             const save_data = await Register({
                 username,password:pass,email,address,mobile,img:image
