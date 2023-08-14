@@ -18,7 +18,7 @@ const eReg = mongoose.Schema({
         unique: false
     },
     mobile: {
-        type:Number,
+        type:String,
         unique: false
     },
     img: {
