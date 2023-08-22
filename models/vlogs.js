@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
 const eVlog = mongoose.Schema({
-    userID: {
+
+    userid: {
         type:mongoose.Schema.Types.ObjectId
     },
+
     vlog: {
         type:String,
         unique:true

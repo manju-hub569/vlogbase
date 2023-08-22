@@ -7,13 +7,15 @@ module.exports.vlogs = async (req, res) => {
    try {
 
     const data = await VlogData({
-        userID : userid,
+        userid : userid,
         vlog : vlog
-    }).save()
+    })
+
+    const resp = await data.save();
 
     res.send({
         status : true,
-        data : data
+        data : resp
     })
 
    } catch (error) {
