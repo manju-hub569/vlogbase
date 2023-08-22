@@ -33,7 +33,7 @@ module.exports.vlogs = async (req, res) => {
 module.exports.vlogsdata = async (req, res) => {
 
     try {
-        const data = await VlogData.find({});
+        const data = await VlogData.find({ userid : req.params.id});
         res.send({
             status : true,
             data: data
