@@ -32,6 +32,7 @@ module.exports.login = async (req, res) => {
             });            
         };       
     } catch (error) {
+        console.log(error)
         res.status(400).send({
             stat: false,
             msg:error
