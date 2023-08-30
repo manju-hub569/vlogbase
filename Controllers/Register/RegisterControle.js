@@ -67,3 +67,30 @@ module.exports.getData = async (req, res) => {
         })
     }
 }
+
+module.exports.getDataCount = async (req, res) => {
+    try {
+        const data = await Register.aggregate([
+            {
+                $group : {
+                    _id : null,
+                    totalDocs : {
+                        $sum : 1
+                    }
+                }
+            }
+        ])
+
+        res.send({
+            status : true,
+            data
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.send({
+            status : false,
+            error
+        })
+    }
+}
