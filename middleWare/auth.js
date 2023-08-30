@@ -8,11 +8,14 @@ module.exports.Auth = async (req, res, next) => {
         const decode = jwt.verify(token, process.env.jwtoken_key);
         
         const data = await Register.findOne({_id:decode._id});
-        if(data) {
+        if(data && decode) {
             req.user = data;
             next();
         } else {
-            res.send("Authentication Error");
+            res.send({
+                status : false,
+                msg : "Auth Error"
+            });
         }       
     } catch (error) {
         if(error) {
