@@ -13,10 +13,10 @@ module.exports.login = async (req, res) => {
             expiresIn: 60 * 5
         });
     
-        res.cookie("token", token, {
-            httpOnly: true
-            // sameSite: 'None', secure: true
-        })
+        // res.cookie("token", token, {
+        //     httpOnly: true
+        //     // sameSite: 'None', secure: true
+        // })
     
         let pass = await bcrypt.compare(password, data.password);
     
@@ -24,6 +24,7 @@ module.exports.login = async (req, res) => {
             res.status(200).send({
                 stat: true,
                 msg:"Login Success",
+                token
             })
         } else {
             res.status(400).send({
