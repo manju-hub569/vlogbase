@@ -25,6 +25,11 @@ const eReg = mongoose.Schema({
         type: String,
         unique: false
     }
+},{
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+    }
 });
 
 Register = mongoose.model('register', eReg);
