@@ -18,6 +18,7 @@ module.exports.Auth = async (req, res, next) => {
             });
         }       
     } catch (error) {
+        console.log(error)
         if(error) {
             res.status(400).send({
                 status: false,
