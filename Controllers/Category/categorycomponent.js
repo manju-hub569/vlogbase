@@ -1,4 +1,5 @@
 const category = require('../../models/category');
+const axios = require('axios');
 
 module.exports.addcategory = async (req, res) => {
 
@@ -64,3 +65,22 @@ module.exports.getCateg = async (req, res) => {
         })
     }
 }
+
+module.exports.allProducts = async (req, res) => {
+    try {
+        const response = await axios.get('https://fakestoreapi.com/products');
+        const responseData = response.data;
+
+        res.send({
+            status: true,
+            data: responseData,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.send({
+            status: false,
+            msg: error.message,
+        });
+    }
+};
