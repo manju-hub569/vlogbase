@@ -6,22 +6,22 @@ const cCart = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId
     },
 
-    mainCateg : {
-        type : String,
-        unique : true
-    },
-    categName : {
-        type : String,
-        unique : true
-    },
-    categDiscript : {
+    title : {
         type : String,
         unique : true
     },
     price : {
+        type : String,
+        unique : true
+    },
+    description : {
+        type : String,
+        unique : true
+    },
+    category : {
         type : Number
     },
-    img :{
+    image :{
         type: String,
         unique: false
     }

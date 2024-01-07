@@ -1,39 +1,18 @@
 const CustCart = require('../../models/cart');
 const Category = require('../../models/category');
 
-const gtts = require("gtts");
-
 module.exports.addCart = async (req, res) => {
 
-    const {userid, categName} = req.body;
-
     try {
-        const data = await Category.aggregate([
-            {
-                $match : {
-                    categName
-                }
-            }
-        ]);
 
-        if(data) {
-            const resp = await CustCart ({
-                userid,
-                mainCateg : data[0].mainCateg,
-                categName : data[0].categName,
-                categDiscript : data[0].categDiscript,
-                price : data[0].price,
-                img : data[0].img
-            });
+    const data = await CustCart(req.body);
 
-            const data_save = await resp.save();
+    const resp = await data.save();
 
-            res.send({
-                status : true,
-                data : data_save
-            })
-
-        }
+    res.send( {
+        status : true ,
+        data : resp
+    })
 
     } catch (error) {
         console.log(error);
