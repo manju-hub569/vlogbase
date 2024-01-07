@@ -7,5 +7,6 @@ const {Auth} = require('../../middleWare/auth');
 route.post('/add_categ',upload.single('avatar'),Categ.addcategory);
 route.get('/categ_data',Categ.getCateg);
 route.get('/categAllProd' , Categ.allProducts);
+route.get('/categSingleCateg/:category' , Categ.singleCategory);
 
 module.exports = route;

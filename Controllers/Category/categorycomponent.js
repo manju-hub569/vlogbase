@@ -84,3 +84,22 @@ module.exports.allProducts = async (req, res) => {
         });
     }
 };
+
+module.exports.singleCategory = async (req, res) => {
+    const {category} = req.params
+    try {
+        const response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
+        const responseData = response.data;
+
+        res.send({
+            status: true,
+            data: responseData,
+        }); 
+    } catch (error) {
+        console.log(error);
+        res.send({
+            status : true ,
+            data : error
+        })
+    }
+}
