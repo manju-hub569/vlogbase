@@ -19,7 +19,7 @@ const cCart = mongoose.Schema({
         unique : true
     },
     category : {
-        type : Number
+        type : String
     },
     image :{
         type: String,
