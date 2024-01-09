@@ -5,11 +5,6 @@ const orders = mongoose.Schema({
     userid: {
         type:mongoose.Schema.Types.ObjectId
     },
-
-    name : {
-        type : String
-    },
-
     title : {
         type : String,
         unique : true
