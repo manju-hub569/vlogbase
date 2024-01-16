@@ -25,6 +25,6 @@ const List = mongoose.Schema({
     }
 });
 
-const WList = mongoose.model('wisjList', List);
+const WList = mongoose.model('wishList', List);
 
 module.exports = WList;

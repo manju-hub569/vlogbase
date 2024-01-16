@@ -10,7 +10,7 @@ module.exports.login = async (req, res) => {
         const data = await Register.findOne({username});
     
         let token = jwt.sign({_id:data._id}, process.env.jwtoken_key, {
-            expiresIn: 60 * 5
+            expiresIn: 60 * 60 * 24 * 7
         });
     
         // res.cookie("token", token, {
