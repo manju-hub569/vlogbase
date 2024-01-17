@@ -14,7 +14,6 @@ module.exports.postData = async (req, res) => {
         } else {
 
             let pass = await bcrypt.hash(password, 10);
-            console.log(password);
 
             let image = "";
             if(req.file == undefined) {
