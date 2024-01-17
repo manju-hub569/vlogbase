@@ -11,9 +11,10 @@ module.exports.postData = async (req, res) => {
             res.send({
                 data:"Please Enter All Data"
             })
-        } else if (username && password && email && mobile && address) {
+        } else {
 
             let pass = await bcrypt.hash(password, 10);
+            console.log(password);
 
             let image = "";
             if(req.file == undefined) {
