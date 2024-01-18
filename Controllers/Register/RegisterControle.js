@@ -9,7 +9,7 @@ module.exports.postData = async (req, res) => {
 
         if(username == '' || password == '' || email == '' || mobile == '' || address == '') {
             res.send({
-                data:"Please Enter All Data"
+                data:"Signup Failed"
             })
         } else {
 
@@ -30,7 +30,8 @@ module.exports.postData = async (req, res) => {
 
             res.status(200).send({
                 status: true,
-                data: data_save
+                resp: data_save,
+                data : "Register Successfull"
             })
 
         }
@@ -40,7 +41,7 @@ module.exports.postData = async (req, res) => {
             console.log(error)
             res.send({
                 status: false,
-                msg: "duplicate key Found"
+                data: "Already Exist"
             })
         }
     }
