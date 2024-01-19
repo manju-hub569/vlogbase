@@ -2,7 +2,6 @@ const Register = require('../models/register');
 const jwt = require('jsonwebtoken');
 
 module.exports.Auth = async (req, res, next) => {
-console.log(req.headers)
     try {
         const token = req.headers.authorization.split(' ')[1];
         const decode = jwt.verify(token, process.env.jwtoken_key);
