@@ -1,12 +1,31 @@
 const express = require('express');
-const route = express.Router();
-const Categ = require('./categorycomponent');
-const {upload} = require('../../middleWare/multer');
-const {Auth} = require('../../middleWare/auth');
+const router = express.Router();
+const categorycomponent = require('./categorycomponent');
+const upload = require('../../middleWare/multer');
+const { Auth } = require('../../middleWare/auth');
+const { convertStringToObjectIds, convertStringToNumber } = require('../../middleWare/convertToObjectId');
 
-route.post('/add_categ',upload.single('avatar'),Categ.addcategory);
-route.get('/categ_data',Categ.getCateg);
-route.get('/categAllProd' , Categ.allProducts);
-route.get('/categSingleCateg/:category' , Categ.singleCategory);
+router.post('/addCategory', upload.single('selectCategory'), convertStringToNumber, convertStringToObjectIds, (req, res) => {
+    categorycomponent.addCategory(req, res)
+});
 
-module.exports = route;
+router.get('/getAllProducts', (req, res) => {
+    categorycomponent.getAllProducts(req, res)
+})
+
+router.get('/getProdByCategory/:category', (req, res) => {
+    categorycomponent.getProdByCategory(req, res)
+})
+
+router.get('/getCategoryById', (req, res) => {
+    categorycomponent.getCategoryById(req, res)
+})
+
+router.put('/updateProduct/:id',async(req,res)=>{
+    categorycomponent.updateProduct(req,res)
+})
+// route.get('/categ_data',Categ.getCateg);
+// route.get('/categAllProd' , Categ.allProducts);
+// route.get('/categSingleCateg/:category' , Categ.singleCategory);
+
+module.exports = router;

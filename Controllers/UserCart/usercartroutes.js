@@ -1,9 +1,15 @@
 const express = require('express');
-const routes = express.Router();
+const router = express.Router();
 const usercomponent = require('../UserCart/usercartcomponent');
 const {Auth} = require('../../middleWare/auth')
+const upload = require('../../middleWare/multer')
+const { convertStringToObjectIds , convertStringToNumber } = require('../../middleWare/convertToObjectId');
 
-routes.post('/addToCart',Auth, usercomponent.addCart);
-routes.get('/cartCount/:userid',Auth, usercomponent.getCartCount);
+router.post('/addToCart',upload.single('addTOCart'), convertStringToObjectIds ,convertStringToNumber, (req,res)=>{
+    usercomponent.addToCart(req,res)
+});
 
-module.exports = routes;
+router.get('/getaddToCartData',(req,res)=>{
+    usercomponent.getaddToCartData(req,res)
+})
+module.exports = router;
