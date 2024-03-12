@@ -65,49 +65,49 @@
 //         })
 //     }
 // }
-
-// module.exports.allProducts = async (req, res) => {
-//     try {
-//         const response = await axios.get('https://fakestoreapi.com/products');
-//         const responseData = response.data;
-
-//         res.send({
-//             status: true,
-//             data: responseData,
-//         });
-//     } catch (error) {
-//         console.error(error);
-
-//         res.send({
-//             status: false,
-//             msg: error.message,
-//         });
-//     }
-// };
-
-// module.exports.singleCategory = async (req, res) => {
-//     const {category} = req.params
-//     try {
-//         const response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
-//         const responseData = response.data;
-
-//         res.send({
-//             status: true,
-//             data: responseData,
-//         }); 
-//     } catch (error) {
-//         console.log(error);
-//         res.send({
-//             status : true ,
-//             data : error
-//         })
-//     }
-// }
 // ------------------------------------------- suraj ---------------------------------------
 
 const express = require('express');
 const { dbcoll } = require('../../DB/conn');
 const { ObjectId } = require('mongodb');
+
+module.exports.allProducts = async (req, res) => {
+    try {
+        const response = await axios.get('https://fakestoreapi.com/products');
+        const responseData = response.data;
+
+        res.send({
+            status: true,
+            data: responseData,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.send({
+            status: false,
+            msg: error.message,
+        });
+    }
+};
+
+module.exports.singleCategory = async (req, res) => {
+    const {category} = req.params
+    try {
+        const response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
+        const responseData = response.data;
+
+        res.send({
+            status: true,
+            data: responseData,
+        }); 
+    } catch (error) {
+        console.log(error);
+        res.send({
+            status : true ,
+            data : error
+        })
+    }
+}
 
 const addCategory = async (req, res) => {
     console.log("addCategory", req.body)
@@ -208,7 +208,21 @@ const getCategoryById = async (req, res) => {
     try {
 const id = req.params.id
 const collection = await dbcoll('product_category');
-const getCategoryById = await collection.findOne({})
+const getCategoryById = await collection.findOne({});
+if (!getCategoryById) {
+    res.status(400).send({
+        success: false,
+        msg: "No Data Found",
+        error: error.message
+    })
+} else {
+    res.status(200).send({
+        success: true,
+        msg: "Category Data",
+        data: getCategoryById
+    })
+
+}
     } catch (error) {
         res.status(400).send({
             success: false,
