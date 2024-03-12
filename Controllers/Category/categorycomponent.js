@@ -71,7 +71,7 @@ const express = require('express');
 const { dbcoll } = require('../../DB/conn');
 const { ObjectId } = require('mongodb');
 
-module.exports.allProducts = async (req, res) => {
+const allProducts = async (req, res) => {
     try {
         const response = await axios.get('https://fakestoreapi.com/products');
         const responseData = response.data;
@@ -90,7 +90,7 @@ module.exports.allProducts = async (req, res) => {
     }
 };
 
-module.exports.singleCategory = async (req, res) => {
+const singleCategory = async (req, res) => {
     const {category} = req.params
     try {
         const response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
@@ -267,4 +267,4 @@ const updateProduct = async (req, res) => {
 }
 
 
-module.exports = { addCategory, getAllProducts, getProdByCategory, getCategoryById, updateProduct } 
+module.exports = { addCategory, getAllProducts, getProdByCategory, getCategoryById, updateProduct, allProducts, singleCategory } 

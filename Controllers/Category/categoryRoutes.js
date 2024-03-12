@@ -24,8 +24,13 @@ router.get('/getCategoryById', (req, res) => {
 router.put('/updateProduct/:id',async(req,res)=>{
     categorycomponent.updateProduct(req,res)
 })
-// route.get('/categ_data',Categ.getCateg);
-// route.get('/categAllProd' , Categ.allProducts);
-// route.get('/categSingleCateg/:category' , Categ.singleCategory);
+
+router.get('/categSingleCateg/:category',async(req,res)=>{
+    categorycomponent.singleCategory(req,res)
+})
+
+router.get('/categAllProd',async(req,res)=>{
+    categorycomponent.allProducts(req,res)
+})
 
 module.exports = router;
