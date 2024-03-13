@@ -1,5 +1,5 @@
 // const category = require('../../models/category');
-// const axios = require('axios');
+const axios = require('axios');
 
 // module.exports.addcategory = async (req, res) => {
 
