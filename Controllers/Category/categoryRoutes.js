@@ -29,7 +29,7 @@ router.get('/categSingleCateg/:category',async(req,res)=>{
     categorycomponent.singleCategory(req,res)
 })
 
-router.post('/categAllProd',async(req,res)=>{
+router.get('/categAllProd',async(req,res)=>{
     categorycomponent.allProducts(req,res)
 })
 
