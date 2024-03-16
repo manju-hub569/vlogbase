@@ -108,9 +108,9 @@ const register = async (req, res) => {
     if (req.file) {
         filename = req.file.filename; 
     }
-    const { userName, password, phoneNo, email } = req.body;
+    const { username, password, number, email, address } = req.body;
     try {
-        if (!userName || !password || !phoneNo || !email) {
+        if (!username || !password || !number || !email || !address) {
             return res.status(400).send({
                 success: false,
                 msg: "Fill All Details"
@@ -118,7 +118,7 @@ const register = async (req, res) => {
         }
 
         const collection = await dbcoll('register');
-        const data = await collection.find({ $or: [{ userName }, { email }] }).toArray();
+        const data = await collection.find({ $or: [{ username }, { email }] }).toArray();
 
         if (data.length > 0) {
             return res.status(400).send({
@@ -130,9 +130,10 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = {
-            userName,
+            username,
             password: hashedPassword,
-            phoneNo,
+            number,
+            address,
             email,
             image: filename 
         };
@@ -141,8 +142,7 @@ const register = async (req, res) => {
         console.log('newRegisterUser', newRegisterUser);
         res.status(200).send({
             success: true,
-            msg: "Data Added Successfully",
-            data: newRegisterUser
+            msg: "Data Added Successfully"
         });
     } catch (error) {
         res.status(400).send({
