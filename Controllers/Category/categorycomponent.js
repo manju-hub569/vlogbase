@@ -69,29 +69,102 @@
 
 const express = require('express');
 const { dbcoll } = require('../../DB/conn');
+const axios = require('axios');
 const { ObjectId } = require('mongodb');
 
-const allProducts = async (req, res) => {
-    try {
-        const response = await axios.get('https://fakestoreapi.com/products');
-        const responseData = response.data;
+// const allProducts = async (req, res) => {
+//     let responseData, data
+//     try {
+//         const response = await axios.get('https://fakestoreapi.com/products');
+//         responseData = response.data;
+//         console.log("responseData", responseData)
+//         if (responseData) {
+//             const collection = await dbcoll('product_category')
+//             const data = await collection.insertMany(responseData)
+//             if (data.length > 0) {
+//                 const data1 = await collection.deleteMany({})
+//                 if (data1.deletedCount > 0) {
+//                     const insertMany = await collection.insertMany('responseData');
+//                     res.status(200).send({
+//                         success: true,
+//                         msg: "Data Deleted and Added Successfully"
+//                     })
+//                 }else {
+//                     // const insertMany = await collection.insertMany('responseData');
+//                     res.status(400).send({
+//                         success: false,
+//                         msg: "Data Deleted and Added UnSuccessfully"
+//                     })
+//                 }
+//             } 
+//         } else {
+//             res.status(400).res.send({
+//                 status: false,
+//                 error: error.message
+//             });
+//         }
+//         res.send({
+//             status: true,
+//             data: responseData,
+//             data
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.send({
+//             status: false,
+//             msg: error.message,
+//         });
+//     }
+// };
 
-        res.send({
-            status: true,
-            data: responseData,
-        });
+const allProducts = async (req, res) => {
+    let responseData, data;
+    try {
+     
+        const response = await axios.get('https://fakestoreapi.com/products');
+        responseData = response.data;
+        if (responseData && responseData.length > 0) {
+            const collection = await dbcoll('product_category');
+            const existingData = await collection.find({}).toArray();
+            const newData = responseData.filter(item => !existingData.some(existingItem => existingItem.id === item.id)) ;
+            if (newData.length > 0) {
+                const insertResult = await collection.insertMany(newData);
+                if (insertResult.insertedCount > 0) {
+                    res.status(200).send({
+                        success: true,
+                        msg: "New data added successfully"
+                    });
+                } else {
+                    res.status(400).send({
+                        success: true,
+                        msg: " No New data added "
+                    });
+                }
+            } else {
+                res.status(400).send({
+                    success: false,
+                    msg: "No new data to add"
+                });
+            }
+        } else {
+            res.status(400).send({
+                success: false,
+                msg: "No data received from the external API"
+            });
+        }
     } catch (error) {
         console.error(error);
-
-        res.send({
-            status: false,
-            msg: error.message,
+        res.status(500).send({
+            success: false,
+            msg: error.message
         });
     }
 };
 
+
+
 const singleCategory = async (req, res) => {
-    const {category} = req.params
+    const { category } = req.params
     try {
         const response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
         const responseData = response.data;
@@ -99,12 +172,12 @@ const singleCategory = async (req, res) => {
         res.send({
             status: true,
             data: responseData,
-        }); 
+        });
     } catch (error) {
         console.log(error);
         res.send({
-            status : true ,
-            data : error
+            status: true,
+            data: error
         })
     }
 }
@@ -206,23 +279,23 @@ const getProdByCategory = async (req, res) => {
 
 const getCategoryById = async (req, res) => {
     try {
-const id = req.params.id
-const collection = await dbcoll('product_category');
-const getCategoryById = await collection.findOne({});
-if (!getCategoryById) {
-    res.status(400).send({
-        success: false,
-        msg: "No Data Found",
-        error: error.message
-    })
-} else {
-    res.status(200).send({
-        success: true,
-        msg: "Category Data",
-        data: getCategoryById
-    })
+        const id = req.params.id
+        const collection = await dbcoll('product_category');
+        const getCategoryById = await collection.findOne({});
+        if (!getCategoryById) {
+            res.status(400).send({
+                success: false,
+                msg: "No Data Found",
+                error: error.message
+            })
+        } else {
+            res.status(200).send({
+                success: true,
+                msg: "Category Data",
+                data: getCategoryById
+            })
 
-}
+        }
     } catch (error) {
         res.status(400).send({
             success: false,
